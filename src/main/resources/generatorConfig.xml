@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >  
+<generatorConfiguration>  
+    <!-- 引入配置文件 -->  
+    <properties resource="init.properties"/>  
+      
+    <!-- 指定数据连接驱动jar地址 -->  
+    <classPathEntry location="${classPath}" />  
+      
+    <!-- 一个数据库一个context -->  
+    <context id="infoGuardian">  
+        <!-- 注释 -->  
+        <commentGenerator >  
+            <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->  
+            <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->  
+        </commentGenerator>  
+          
+        <!-- jdbc连接 -->  
+        <jdbcConnection driverClass="${jdbc_driver}"  
+            connectionURL="${jdbc_url}" userId="${jdbc_user}"  
+            password="${jdbc_password}" />  
+          
+        <!-- 类型转换 -->  
+        <javaTypeResolver>  
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->  
+            <property name="forceBigDecimals" value="false"/>  
+        </javaTypeResolver>  
+          
+        <!-- 生成实体类地址 -->    
+        <javaModelGenerator targetPackage="cn.lovemm.model"
+            targetProject="${project}" >  
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->  
+            <property name="enableSubPackages" value="false"/>  
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->  
+            <property name="trimStrings" value="true"/>  
+        </javaModelGenerator>  
+          
+        <!-- 生成mapxml文件 -->  
+        <sqlMapGenerator targetPackage="cn.lovemm.mapper.xml"
+            targetProject="${project}" >  
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->  
+            <property name="enableSubPackages" value="false" />  
+        </sqlMapGenerator>  
+          
+        <!-- 生成mapxml对应client，也就是接口dao -->      
+        <javaClientGenerator targetPackage="cn.lovemm.mapper"
+            targetProject="${project}" type="XMLMAPPER" >  
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->  
+            <property name="enableSubPackages" value="false" />  
+        </javaClientGenerator>  
+          
+        <!-- 配置表信息 -->  
+        <!-- s_user_role -->    
+        <table schema="${jdbc_user}" tableName="s_user_role"  
+            domainObjectName="SUserRole" enableCountByExample="true"  
+            enableDeleteByExample="true" enableSelectByExample="true"  
+            enableUpdateByExample="true">  
+            <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample   
+                是否生成 example类   -->  
+              
+            <!-- 忽略列，不生成bean 字段  
+            <ignoreColumn column="FRED" />  
+            <! 指定列的java数据类型 
+            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />  -->
+        </table>  
+        
+        <!-- s_user -->
+        <table schema="${jdbc_user}" tableName="s_user"  
+            domainObjectName="SUser" enableCountByExample="true"  
+            enableDeleteByExample="true" enableSelectByExample="true"  
+            enableUpdateByExample="true">  
+        </table> 
+        
+        <!-- s_role_resource -->
+        <table schema="${jdbc_user}" tableName="s_role_resource"  
+            domainObjectName="SRoleResources" enableCountByExample="true"  
+            enableDeleteByExample="true" enableSelectByExample="true"  
+            enableUpdateByExample="true">  
+        </table>
+        
+        <!-- s_role -->
+        <table schema="${jdbc_user}" tableName="s_role"  
+            domainObjectName="SRole" enableCountByExample="true"  
+            enableDeleteByExample="true" enableSelectByExample="true"  
+            enableUpdateByExample="true">  
+        </table>
+        
+        <!-- s_resource -->
+        <table schema="${jdbc_user}" tableName="s_resource"  
+            domainObjectName="SResource" enableCountByExample="true"  
+            enableDeleteByExample="true" enableSelectByExample="true"  
+            enableUpdateByExample="true">  
+        </table>
+        
+        <!-- s_data_dic -->
+        <table schema="${jdbc_user}" tableName="s_data_dic"  
+            domainObjectName="SDataDic" enableCountByExample="true"  
+            enableDeleteByExample="true" enableSelectByExample="true"  
+            enableUpdateByExample="true">  
+        </table>
+  
+    </context>  
+</generatorConfiguration>  
+
+
+<!-- <generatorConfiguration>
+    数据库驱动
+    <classPathEntry    location="/Volumes/LoveMM-SD/java/apache-maven-3.3.9/repo/mysql/mysql-connector-java/5.1.41/mysql-connector-java-5.1.41.jar"/>
+    <context id="DB2Tables"    targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        数据库链接地址账号密码
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/spring_boot_test" userId="root" password="aimm950123">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        生成Model类存放位置
+        <javaModelGenerator targetPackage="com.lovemm.model" targetProject="SSM-Test">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        生成映射文件存放位置
+        <sqlMapGenerator targetPackage="com.lovemm.mapping" targetProject="SSM-Test">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        生成Dao类存放位置
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lovemm.dao" targetProject="SSM-Test">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        生成对应表及类名
+        <table tableName="USER_LOGIN" domainObjectName="UserLogin" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+    </context>
+</generatorConfiguration> -->
