@@ -1,6 +1,5 @@
 package cn.lovemm.controller;
 
-import cn.lovemm.util.PwdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,7 @@ public class MainController {
         return new Date();
     }
 
-    @RequestMapping(value = "/toLogin")
+    @RequestMapping(value = "/public/toLogin")
     public String toLogin() {
         logger.info("进入登录页面");
 
@@ -46,5 +45,32 @@ public class MainController {
         return "error/other/500";
     }
 
+    @RequestMapping(value = "/public/toIndex")
+    public String toIndex() {
+        logger.info("进入首页");
+
+        return "index/index";
+    }
+
+    @RequestMapping(value = "/public/toBlog")
+    public String toBlog() {
+        logger.info("进入博客");
+
+        return "blog/blog";
+    }
+
+    @RequestMapping(value = "/public/toNotes")
+    public String toNotes() {
+        logger.info("进入笔记");
+
+        return "notes/notes";
+    }
+
+    @RequestMapping(value = "/public/toOther")
+    public String toOther() {
+        logger.info("进入其他");
+
+        return "other/other";
+    }
 
 }

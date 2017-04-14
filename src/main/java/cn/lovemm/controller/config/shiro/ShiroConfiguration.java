@@ -60,10 +60,10 @@ public class ShiroConfiguration {
 		outFilter.setRedirectUrl("/login");
 		logoutFilter.put("/logout", outFilter);
 		shiroFilterFactoryBean.setFilters(logoutFilter);
-		// 设置login页面，默认/login.jsp
-		shiroFilterFactoryBean.setLoginUrl("/toLogin");
+		// 设置login页面，默认/index.html
+		shiroFilterFactoryBean.setLoginUrl("/public/toIndex");
 		// 设置登录成功后跳转链接
-		shiroFilterFactoryBean.setSuccessUrl("/toIndex");
+		shiroFilterFactoryBean.setSuccessUrl("/public/toIndex");
 		// 设置未授权页面
 		shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
 		// 拦截器
