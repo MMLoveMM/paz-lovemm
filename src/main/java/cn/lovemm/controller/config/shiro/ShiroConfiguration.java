@@ -73,6 +73,8 @@ public class ShiroConfiguration {
 		filterChainDefinitionMap.put("/static/**", "anon");
 		// 设置错误页面拦截规则
 		filterChainDefinitionMap.put("/error/**", "anon");
+		// 设置登录页面拦截规则
+		filterChainDefinitionMap.put("/toLogin", "anon");
 		// 设置公共访问接口拦截规则
 		filterChainDefinitionMap.put("/public/**", "anon");
 		// 设置全局拦截规则

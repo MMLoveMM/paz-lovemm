@@ -24,7 +24,7 @@ public class MainController {
         return new Date();
     }
 
-    @RequestMapping(value = "/public/toLogin")
+    @RequestMapping(value = "/toLogin")
     public String toLogin() {
         logger.info("进入登录页面");
 
