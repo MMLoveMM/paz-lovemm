@@ -93,10 +93,4 @@ public interface SRoleMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(SRole record);
-
-    /**
-     * @author pangpj 2017年03月28日16:59:28
-     * 根据角色id  获取权限数据
-     */
-    List<SRole> getRolesByUserId(String userId);
 }

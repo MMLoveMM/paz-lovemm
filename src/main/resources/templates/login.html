@@ -14,22 +14,36 @@
 
     <div class="page-container">
         <h1 id="tit">登录</h1>
-        <form action="" method="post">
+        <form id="login_from" action="" method="post" onsubmit="return false">
             <div id="login_div">
-                <input type="text" id="username" name="username" class="username" placeholder="用户名" required="" oninvalid="setCustomValidity('请输入您的姓名');" oninput="setCustomValidity('');" />
-                <input type="password" id="password" name="password" class="password" placeholder="密码" />
-                <button type="submit" style="width: 145px;">登录</button>
+                <div>
+                    <input type="text" id="username" name="username" placeholder="用户名" />
+                    <label class="error-tips" style="position: absolute; top: 40px; right: -100px; color: red;"></label>
+                </div>
+                <div>
+                    <input type="password" id="password" name="password" placeholder="密码" />
+                    <label class="error-tips" style="position: absolute; top: 110px; right: -100px; color: red;"></label>
+                </div>
+                <div style="margin-top: 20px;">
+                    <div id="captcha2">
+                        <p id="wait2" class="show">正在加载验证码......</p>
+                    </div>
+                </div>
+                <button type="submit" id="login_button" style="width: 145px;">登录</button>
                 <button type="button" id="sign_button" style="width: 145px;">注册</button>
-                <div class="error"><span>+</span></div>
+                <div class="custom-error"><span>+</span></div>
+                <div id="errorMsg" style="position: absolute; top: 175px; right: -100px; color: red; display: none;">
+                    请先完成校验
+                </div>
             </div>
-            <div id="sign_div" style="display: none;">
-                <input type="text" id="username1" name="username" class="username" placeholder="用户名" required="" />
-                <input type="password" id="password1" name="password" class="password" placeholder="密码" />
-                <input type="text" id="username2" name="username" class="username" placeholder="用户名" />
-                <input type="password" id="password2" name="password" class="password" placeholder="密码" />
-                <button type="submit" style="width: 145px;">确认</button>
-                <button id="sign_call" type="button" style="width: 145px;">取消</button>
-            </div>
+            <!--<div id="sign_div" style="display: none;">-->
+                <!--<input type="text" id="username1" name="username" class="username" placeholder="用户名" required="" />-->
+                <!--<input type="password" id="password1" name="password" class="password" placeholder="密码" />-->
+                <!--<input type="text" id="username2" name="username" class="username" placeholder="用户名" />-->
+                <!--<input type="password" id="password2" name="password" class="password" placeholder="密码" />-->
+                <!--<button type="submit" style="width: 145px;">确认</button>-->
+                <!--<button id="sign_call" type="button" style="width: 145px;" onclick="window.location.reload();">取消</button>-->
+            <!--</div>-->
         </form>
 
         <div class="connect">
@@ -44,8 +58,14 @@
 
     <!-- Javascript -->
     <script th:src="@{/static/res/jquery-2.1.0.js}"></script>
+    <script th:src="@{/static/res/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/static/res/supersized.3.2.7.min.js}"></script>
+    <script th:src="@{/static/res/jquery.validation/1.14.0/jquery.validate.js}"></script>
+    <script th:src="@{/static/res/jquery.validation/1.14.0/validate-methods.js}"></script>
+    <script th:src="@{/static/base/base-js.js}"></script>
+    <script th:src="@{/static/base/util.js}"></script>
     <script th:src="@{/static/busi/js/login/supersized-init.js}"></script>
-    <script th:src="@{/static/busi/js/login/scripts.js}"></script>
+    <script th:src="@{/static/busi/js/login/gt.js}"></script>
+    <script th:src="@{/static/busi/js/login/login.js}"></script>
 </body>
 </html>

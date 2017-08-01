@@ -1,17 +1,14 @@
 package cn.lovemm.controller.config.shiro;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.PostConstruct;
 
+import cn.lovemm.model.*;
+import cn.lovemm.service.*;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -23,37 +20,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.lovemm.model.SResource;
-import cn.lovemm.model.SResourceExample;
-import cn.lovemm.model.SRole;
-import cn.lovemm.model.SRoleExample;
-import cn.lovemm.model.SRoleResourcesExample;
-import cn.lovemm.model.SRoleResourcesKey;
-import cn.lovemm.model.SUser;
-import cn.lovemm.model.SUserRoleExample;
-import cn.lovemm.model.SUserRoleKey;
-import cn.lovemm.service.SResourceService;
-import cn.lovemm.service.SRoleResourcesService;
-import cn.lovemm.service.SRoleService;
-import cn.lovemm.service.SUserRoleService;
-import cn.lovemm.service.SUserService;
-import cn.lovemm.util.StringUtil;
-
 
 public class UserRealm extends AuthorizingRealm {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRealm.class);
 
 	@Autowired
-	private SUserService sUserService;
+	private BlogUserService blogUserService;
+
 	@Autowired
-	private SRoleService sRoleService;
+	private BlogRoleService blogRoleService;
+
 	@Autowired
-	private SUserRoleService sUserRoleService;
+	private BlogUserRoleService blogUserRoleService;
+
 	@Autowired
-	private SRoleResourcesService sRoleResourceService;
+	private BlogRoleResourceService blogRoleResourceService;
+
 	@Autowired
-	private SResourceService sResourceService;
+	private BlogResourceService blogResourceService;
+
+	@Autowired
+	private BlogUserConfigService blogUserConfigService;
+
 	/**
 	 * 设置密码凭证验证方式
 	 */
@@ -61,62 +50,62 @@ public class UserRealm extends AuthorizingRealm {
 	public void initCredentialsMatcher(){
 		setCredentialsMatcher(new CustomCredentialsMatcher());
 	}
-	
+
 	/**
 	 * 授权验证
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		SUser user = (SUser) super.getAvailablePrincipal(principals);
-		logger.info("do shiro authorization - {}", user.getUserId());
-		// 加载用户角色
-		SUserRoleExample surEx = new SUserRoleExample();
-		surEx.createCriteria().andUserIdEqualTo(user.getUserId());
-		List<SUserRoleKey> surs = sUserRoleService.selectByExample(surEx);
-		List<String> roleIds  = new ArrayList<String>();
-		if (surs != null && !surs.isEmpty()) {
-			surs.forEach(blogUserRoleKey -> {
-				roleIds.add(blogUserRoleKey.getRoleId());
-			});
-		}
-		SRoleExample srEx = new SRoleExample();
-		srEx.createCriteria().andRoleIdIn(roleIds);
-		List<SRole> roles = sRoleService.selectByExample(srEx);
-		Set<String> rolesName = new HashSet<String>();
-		for (SRole role : roles) {
-			rolesName.add(role.getRoleName());
-		}
-		
-		// 加载用户权限
-		SRoleResourcesExample srrEx = new SRoleResourcesExample();
-		srrEx.createCriteria().andRoleIdIn(roleIds);
-		srrEx.setDistinct(true);
-		List<SRoleResourcesKey> brrs = sRoleResourceService.selectByExample(srrEx);
-		List<String> resIds = new ArrayList<String>();
-		if (brrs != null && !brrs.isEmpty()) {
-			brrs.forEach(blogRoleResourceKey -> {
-				resIds.add(blogRoleResourceKey.getResId());
-			});
-		}
-		SResourceExample sresEx = new SResourceExample();
-		sresEx.createCriteria().andResIdIn(resIds);
-		List<SResource> ress = sResourceService.selectByExample(sresEx);
-		Set<String> resNames = new HashSet<String>();
-		for (SResource res : ress) {
-			if (StringUtil.isNotEmpty(res.getPermission())){
+		BlogUser user = (BlogUser) super.getAvailablePrincipal(principals);
+		logger.info("do shiro authorization - {}", user == null ? null : user.getUserId());
+		if (user != null) {
+			// 加载用户角色
+			BlogUserRoleExample burEx = new BlogUserRoleExample();
+			burEx.createCriteria().andUserIdEqualTo(user.getUserId());
+			List<BlogUserRoleKey> burs = blogUserRoleService.selectByExample(burEx);
+			List<String> roleIds  = new ArrayList<String>();
+			if (burs != null && !burs.isEmpty()) {
+				burs.forEach(blogUserRoleKey -> {
+					roleIds.add(blogUserRoleKey.getRoleId());
+				});
+			}
+			BlogRoleExample brEx = new BlogRoleExample();
+			brEx.createCriteria().andRoleIdIn(roleIds);
+			List<BlogRole> roles = blogRoleService.selectByExample(brEx);
+			Set<String> rolesName = new HashSet<String>();
+			for (BlogRole role : roles) {
+				rolesName.add(role.getRoleName());
+			}
+
+			// 加载用户权限
+			BlogRoleResourceExample brrEx = new BlogRoleResourceExample();
+			brrEx.createCriteria().andRoleIdIn(roleIds);
+			brrEx.setDistinct(true);
+			List<BlogRoleResourceKey> brrs = blogRoleResourceService.selectByExample(brrEx);
+			List<String> resIds = new ArrayList<String>();
+			if (brrs != null && !brrs.isEmpty()) {
+				brrs.forEach(blogRoleResourceKey -> {
+					resIds.add(blogRoleResourceKey.getResId());
+				});
+			}
+			BlogResourceExample bresEx = new BlogResourceExample();
+			bresEx.createCriteria().andResIdIn(resIds);
+			List<BlogResource> ress = blogResourceService.selectByExample(bresEx);
+			Set<String> resNames = new HashSet<String>();
+			for (BlogResource res : ress) {
 				resNames.add(res.getPermission());
 			}
+
+			// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
+			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			info.setRoles(rolesName);
+			info.setStringPermissions(resNames);
+
+			logger.info("load roles：{}, load permissions：{}", rolesName, resNames);
+
+			return info;
 		}
-
-		// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
-		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.setRoles(rolesName);
-		info.setStringPermissions(resNames);
-
-		logger.info("load roles：{}, load permissions：{}", rolesName, resNames);
-
-		return info;
-
+		return null;
 
 	}
 
@@ -126,18 +115,40 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
-		SUser user = sUserService.selectByUserMultiName(usernamePasswordToken.getUsername());
-		if (user == null) {
-			 throw new UnknownAccountException();
+
+		String userAccount = usernamePasswordToken.getUsername();
+
+		BlogUserExample buEx = new  BlogUserExample();
+		BlogUserExample.Criteria buExCr = buEx .createCriteria();
+		if (userAccount.matches("^[1][0-9]{10}$")) {
+			buExCr.andUserTelEqualTo(userAccount);
+		} else if (userAccount.matches("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$")) {
+			buExCr.andUserMailEqualTo(userAccount);
+		} else {
+			buExCr.andUserAccountEqualTo(userAccount);
 		}
-		if(user.getIsLocked() == 1){
-			 throw new LockedAccountException();
+		List<BlogUser> bUsers = blogUserService.selectByExample(buEx);
+		if(bUsers == null || bUsers.isEmpty()){
+			throw new UnknownAccountException("用户不存在");
 		}
-		if(user.getStatus() != 1) {
-			throw new DisabledAccountException();
+		BlogUser user = bUsers.get(0);
+		BlogUser sUser = new  BlogUser();
+		sUser.setUserId(user.getUserId());
+		sUser.setNickName(user.getNickName());
+		sUser.setLastLoginIp(user.getLastLoginIp());
+		sUser.setLoginTimes(user.getLoginTimes());
+		BlogUserConfigExample bucEx = new BlogUserConfigExample();
+		bucEx.createCriteria().andUserIdEqualTo(user.getUserId());
+		List<BlogUserConfig> bucs = blogUserConfigService.selectByExample(bucEx);
+		Map<String, Object> config = new HashMap<String, Object>();
+		if (bucs != null && !bucs.isEmpty()) {
+			for (BlogUserConfig buc : bucs) {
+				config.put(buc.getConfigKey(), buc.getConfigValue());
+			}
 		}
-		
-		return new SimpleAuthenticationInfo(user, user.getUserPwd(), getName());
+		sUser.setConfig(config);
+		return new SimpleAuthenticationInfo(sUser, user.getUserPwd(), getName());
 	}
 
 }
+

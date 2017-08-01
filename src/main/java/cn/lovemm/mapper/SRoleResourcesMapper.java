@@ -1,6 +1,5 @@
 package cn.lovemm.mapper;
 
-import cn.lovemm.model.SResource;
 import cn.lovemm.model.SRoleResourcesExample;
 import cn.lovemm.model.SRoleResourcesKey;
 import java.util.List;
@@ -70,12 +69,4 @@ public interface SRoleResourcesMapper {
      * @mbggenerated
      */
     int updateByExample(@Param("record") SRoleResourcesKey record, @Param("example") SRoleResourcesExample example);
-
-    /**
-     * @author pangpj 2017年03月28日17:15:34
-     * 根据角色id  获取角色资源
-     * @param userId 角色id
-     * @return
-     */
-    List<SResource> getResourcesByUserId(String userId);
 }

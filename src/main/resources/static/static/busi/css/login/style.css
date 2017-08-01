@@ -131,7 +131,7 @@ button:active {
     border: 0px solid #ef4300;
 }
 
-.error {
+.custom-error {
     display: none;
     position: absolute;
     top: 27px;
@@ -145,7 +145,7 @@ button:active {
     border-radius: 8px;
 }
 
-.error span {
+.custom-error span {
     display: inline-block;
     margin-left: 2px;
     font-size: 40px;

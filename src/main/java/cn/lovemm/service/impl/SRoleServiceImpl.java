@@ -71,13 +71,4 @@ public class SRoleServiceImpl implements SRoleService {
 		return sRoleMapper.updateByPrimaryKey(record);
 	}
 
-	/**
-	 * @author pangpj 2017年03月28日16:59:28
-	 * 根据角色id  获取权限数据
-	 */
-	public List<SRole> getRolesByUserId(String userId) {
-		
-		return sRoleMapper.getRolesByUserId(userId);
-	}
-
 }

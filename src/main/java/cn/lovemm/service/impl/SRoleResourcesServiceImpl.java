@@ -57,15 +57,4 @@ public class SRoleResourcesServiceImpl implements SRoleResourcesService {
 		return sRoleResourcesMapper.updateByExample(record, example);
 	}
 
-	/**
-	 * @author pangpj 2017年03月28日17:15:34
-	 * 根据角色id  获取角色资源
-	 * @param userid 角色id
-	 * @return
-	 */
-	public List<SResource> getResourcesByUserId(String userid) {
-
-		return sRoleResourcesMapper.getResourcesByUserId(userid);
-	}
-
 }

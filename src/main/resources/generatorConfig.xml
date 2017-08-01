@@ -98,6 +98,76 @@
             enableDeleteByExample="true" enableSelectByExample="true"  
             enableUpdateByExample="true">  
         </table>
+
+        <!-- blog_article -->
+        <table schema="${jdbc_user}" tableName="blog_article"
+               domainObjectName="BlogArticle" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_article_tag -->
+        <table schema="${jdbc_user}" tableName="blog_article_tag"
+               domainObjectName="BlogArticleTag" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_corpus -->
+        <table schema="${jdbc_user}" tableName="blog_corpus"
+               domainObjectName="BlogCorpus" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_resource -->
+        <table schema="${jdbc_user}" tableName="blog_resource"
+               domainObjectName="BlogResource" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_role -->
+        <table schema="${jdbc_user}" tableName="blog_role"
+               domainObjectName="BlogRole" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_role_resource -->
+        <table schema="${jdbc_user}" tableName="blog_role_resource"
+               domainObjectName="BlogRoleResource" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_tag -->
+        <table schema="${jdbc_user}" tableName="blog_tag"
+               domainObjectName="BlogTag" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_user -->
+        <table schema="${jdbc_user}" tableName="blog_user"
+               domainObjectName="BlogUser" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_user_role -->
+        <table schema="${jdbc_user}" tableName="blog_user_role"
+               domainObjectName="BlogUserRole" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
+
+        <!-- blog_user_config -->
+        <table schema="${jdbc_user}" tableName="blog_user_config"
+               domainObjectName="BlogUserConfig" enableCountByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true">
+        </table>
   
     </context>  
 </generatorConfiguration>  
